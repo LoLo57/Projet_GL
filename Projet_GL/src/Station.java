@@ -1,21 +1,59 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class Station {
-
+	
+	private String nom;
 	private int x;
 	private int y;
-	private ArrayList<Voie> voies;
+	private ArrayList<Voie> voies;	
 	
 	
+	public Station(String nom, int x, int y){
+		this.nom = nom;
+		this.x = x;
+		this.y = y;
+		this.voies = new ArrayList<Voie>();
+	}
 	
-	public void supprimerVoie(Voie v){
+	
+	public boolean existeVoie(Voie v){
+		boolean existe = false;
+		Iterator<Voie> i = voies.iterator();
+		Voie tmp = null;
 		
+		while(i.hasNext() && existe == false){
+			tmp = (Voie)i.next();
+			if(tmp.getNum() == v.getNum()){
+				existe = true;
+			}	
+		}
+		return existe;
 	}
 	
 	
 	public void addVoie(Voie v){
-		voies.add(v);
+		if(existeVoie(v) == true){
+			voies.add(v);
+		}
+	}
+	
+	
+	public void supprimerVoie(Voie v){
+		if(existeVoie(v) == true){
+			voies.remove(v);
+		}	
+	}
+	
+	
+	public String getNom() {
+		return nom;
+	}
+	
+	
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 	
 	
