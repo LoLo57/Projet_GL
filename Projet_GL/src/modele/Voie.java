@@ -1,6 +1,10 @@
 package modele;
 
 public class Voie {
+	/*
+	 * Pour le numéro de voie voir pour faire un compteur static
+	 * pour a chaque nouvelle instance on incremente de 1 ?
+	 */
 	private int num;
 	private int duree;
 	private boolean enCirculation;

@@ -1,13 +1,21 @@
 package testJunit;
 
-import static org.junit.Assert.*;
-
+import junit.framework.TestCase;
+import modele.Station;
+import modele.Voie;
 
 import org.junit.Test;
 
-import modele.*;
-
-public class StationTest {
+public class StationTest extends TestCase{
+	private Station instance_station;
+	private Voie instance_voie1;
+	private Voie instance_voie2;
+	
+	public void setUp(){
+		instance_station = new Station("test", 1, 1);
+		instance_voie1 = new Voie(1, 120);
+		instance_voie2 = new Voie(2, 120);
+	}
 
 	
 	/*
@@ -15,12 +23,9 @@ public class StationTest {
 	 */
 	@Test
 	public void testExiste() {
-		Voie v1 = new Voie(1, 120);
-		Voie v2 = new Voie(2, 120);
-		Station s = new Station("test", 1, 1);
-		s.addVoie(v1);
-		assertEquals(true, s.existeVoie(v1));
-		assertEquals(false, s.existeVoie(v2));
+		instance_station.addVoie(instance_voie1);
+		assertEquals(true, instance_station.existeVoie(instance_voie1));
+		assertEquals(false, instance_station.existeVoie(instance_voie2));
 	}
 	
 
@@ -29,20 +34,17 @@ public class StationTest {
 	 * Test de la methode getNbVoies
 	 */
 	@Test
-	public void testGetNbVoies() {
-		Voie v1 = new Voie(1, 120);
-		Voie v2 = new Voie(2, 120);
-		Station s = new Station("test", 1, 1);
-		assertEquals(0, s.getNbVoies());
+	public void testGetNbVoies() {		
+		assertEquals(0, instance_station.getNbVoies());
 		
-		s.addVoie(v1);
-		assertEquals(1, s.getNbVoies());
+		instance_station.addVoie(instance_voie1);
+		assertEquals(1, instance_station.getNbVoies());
 		
-		s.addVoie(v2);
-		assertEquals(2, s.getNbVoies());
+		instance_station.addVoie(instance_voie2);
+		assertEquals(2, instance_station.getNbVoies());
 		
-		s.deleteVoie(v1);
-		assertEquals(1, s.getNbVoies());
+		instance_station.deleteVoie(instance_voie1);
+		assertEquals(1, instance_station.getNbVoies());
 
 	}
 
