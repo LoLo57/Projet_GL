@@ -1,3 +1,4 @@
+package modele;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -34,16 +35,30 @@ public class Station {
 	
 	
 	public void addVoie(Voie v){
-		if(existeVoie(v) == true){
+		if(existeVoie(v) == false && v != null){
 			voies.add(v);
 		}
 	}
 	
 	
-	public void supprimerVoie(Voie v){
-		if(existeVoie(v) == true){
+	public void deleteVoie(Voie v){
+		if(existeVoie(v) == true && v != null){
 			voies.remove(v);
 		}	
+	}
+	
+	
+	public int getNbVoies(){
+		int nb = 0;
+		
+		Iterator<Voie> i = voies.iterator();	
+		while(i.hasNext()){
+			nb++;
+			i.next();		
+		}
+		
+		return nb;
+		
 	}
 	
 	
@@ -85,5 +100,6 @@ public class Station {
 	public void setVoies(ArrayList<Voie> voies) {
 		this.voies = voies;
 	}
+	
 	
 }
