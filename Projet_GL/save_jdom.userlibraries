@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<eclipse-userlibraries version="2">
+    <library name="JDom" systemlibrary="true">
+        <archive path="/Users/LoLo/Documents/workspace/jdom/build/jdom.jar"/>
+        <archive path="/Users/LoLo/Documents/workspace/jdom/lib/ant.jar"/>
+        <archive path="/Users/LoLo/Documents/workspace/jdom/lib/jaxen.jar"/>
+        <archive path="/Users/LoLo/Documents/workspace/jdom/lib/saxpath.jar"/>
+        <archive path="/Users/LoLo/Documents/workspace/jdom/lib/xalan.jar"/>
+        <archive path="/Users/LoLo/Documents/workspace/jdom/lib/xerces.jar"/>
+        <archive path="/Users/LoLo/Documents/workspace/jdom/lib/xml-apis.jar"/>
+    </library>
+</eclipse-userlibraries>
