@@ -8,7 +8,8 @@ public class Station {
 	private String nom;
 	private int x;
 	private int y;
-	private ArrayList<Voie> voies;	
+	private ArrayList<Voie> voies;
+	private boolean ouverte;
 	
 	
 	public Station(String nom, int x, int y){
@@ -16,6 +17,7 @@ public class Station {
 		this.x = x;
 		this.y = y;
 		this.voies = new ArrayList<Voie>();
+		ouverte = true;
 	}
 	
 	
@@ -61,6 +63,17 @@ public class Station {
 		
 	}
 	
+	public boolean isOuvert(){
+		return this.ouverte;
+	}
+	
+	public void fermerStation(){
+		this.ouverte = false;
+	}
+	
+	public void ouvrirStation(){
+		this.ouverte = true;
+	}
 	
 	public String getNom() {
 		return nom;

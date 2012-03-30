@@ -6,13 +6,13 @@ public class Voie {
 	 * pour a chaque nouvelle instance on incremente de 1 ?
 	 */
 	private int num;
-	private int duree;
+	private int duree; //duree en secondes
 	private boolean enCirculation;
 	
 	
 	public Voie(int num, int duree){
 		this.num = num;
-		this.duree = duree;
+		this.duree =(int) Math.random()*300;
 		this.enCirculation = true;
 	}
 	
