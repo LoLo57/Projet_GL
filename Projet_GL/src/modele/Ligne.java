@@ -7,9 +7,9 @@ public class Ligne {
 	private int id_ligne;
 	private ArrayList<Station> stations;
 	
-	public Ligne(int id){
+	public Ligne(int id, ArrayList<Station> stat){
 		this.id_ligne = id;
-		this.stations = new ArrayList<Station>();
+		this.stations = stat;
 	}
 	
 	public boolean existeStation(Station s){

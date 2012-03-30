@@ -13,8 +13,8 @@ public class StationTest extends TestCase{
 	
 	public void setUp(){
 		instance_station = new Station("test", 1, 1);
-		instance_voie1 = new Voie(1, 120);
-		instance_voie2 = new Voie(2, 120);
+		instance_voie1 = new Voie(1, 120, 1);
+		instance_voie2 = new Voie(2, 120, 2);
 	}
 
 	

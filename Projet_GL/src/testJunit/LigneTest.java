@@ -1,5 +1,7 @@
 package testJunit;
 
+import java.util.ArrayList;
+
 import modele.Ligne;
 import modele.Station;
 import junit.framework.TestCase;
@@ -11,7 +13,10 @@ public class LigneTest extends TestCase{
 	private Station instance_station2;
 	
 	public void setUp(){
-		instance_ligne = new Ligne(1);
+		ArrayList<Station> l_stat = new ArrayList<Station>();
+		l_stat.add(instance_station1);
+		l_stat.add(instance_station2);
+		instance_ligne = new Ligne(1, l_stat);
 		instance_station1 = new Station("Defense", 148, 23);
 		instance_station2 = new Station("Chatelet", 432, 156);
 	}

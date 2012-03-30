@@ -8,14 +8,19 @@ public class Voie {
 	private int num;
 	private int duree; //duree en secondes
 	private boolean enCirculation;
+	private int numero_ligne;
 	
 	
-	public Voie(int num, int duree){
+	public Voie(int num, int duree, int ligne){
 		this.num = num;
 		this.duree =(int) Math.random()*300;
 		this.enCirculation = true;
+		this.numero_ligne = ligne;
 	}
 	
+	public int getNumeroLigne(){
+		return this.numero_ligne;
+	}
 	
 	public int getNum() {
 		return num;
