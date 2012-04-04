@@ -6,6 +6,11 @@ import modele.Ligne;
 import modele.Station;
 import junit.framework.TestCase;
 
+/**
+ * Test des lignes
+ * @author vherrmann
+ *
+ */
 public class LigneTest extends TestCase{
 	
 	private Ligne instance_ligne;

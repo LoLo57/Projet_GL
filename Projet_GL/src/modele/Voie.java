@@ -3,7 +3,7 @@ package modele;
 import java.util.ArrayList;
 
 /**
- * Symbolise le trajet entre deux stations
+ * Symbolise le trajet entre deux stations 
  * @author vherrmann
  *
  */

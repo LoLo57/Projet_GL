@@ -5,7 +5,7 @@ import java.util.Iterator;
 /**
  * Symbolise une station de métro
  * Une station à une position, des voies qui la relies à d'autres stations et elle peut être ouverte ou fermée
- * @author vherrmann
+ * @author vherrmann 
  *
  */
 public class Station {

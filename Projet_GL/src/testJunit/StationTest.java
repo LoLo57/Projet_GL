@@ -9,6 +9,11 @@ import modele.Voie;
 
 import org.junit.Test;
 
+/**
+ * Test des stations
+ * @author vherrmann
+ *
+ */
 public class StationTest extends TestCase{
 	private Station instance_station1;
 	private Station instance_station2;

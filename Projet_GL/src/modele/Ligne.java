@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Une ligne est un ensemble de station relies entre elles
  * @author vherrmann
- *
+ * 
  */
 public class Ligne {
 
