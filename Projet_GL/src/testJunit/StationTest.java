@@ -1,20 +1,26 @@
 package testJunit;
 
+import java.util.ArrayList;
+
 import junit.framework.TestCase;
+import modele.Ligne;
 import modele.Station;
 import modele.Voie;
 
 import org.junit.Test;
 
 public class StationTest extends TestCase{
-	private Station instance_station;
-	private Voie instance_voie1;
-	private Voie instance_voie2;
+	private Station instance_station1;
+	private Station instance_station2;
+	private Station instance_station3;
+	private Ligne ligne;
 	
 	public void setUp(){
-		instance_station = new Station("test", 1, 1);
-		instance_voie1 = new Voie(1, 120, 1);
-		instance_voie2 = new Voie(2, 120, 2);
+		ligne = new Ligne(1, null);
+		instance_station1 = new Station("test", 1, 1, 30, ligne.getIdLigne());
+		instance_station2 = new Station("test2", 3, 2, 60, ligne.getIdLigne());
+		instance_station3 = new Station("test3", 3, 2, 60, null);
+		instance_station1.addVoie(instance_station2, 10, 40, ligne.getIdLigne());
 	}
 
 	
@@ -23,28 +29,44 @@ public class StationTest extends TestCase{
 	 */
 	@Test
 	public void testExiste() {
-		instance_station.addVoie(instance_voie1);
-		assertEquals(true, instance_station.existeVoie(instance_voie1));
-		assertEquals(false, instance_station.existeVoie(instance_voie2));
+		//instance_station.addVoie(instance_voie1);
+		ArrayList<Voie> voies =instance_station1.getVoies();
+		for(Voie v : voies) {
+			assertEquals(true, instance_station1.existeVoie(v));
+		}
+		assertEquals(false, instance_station1.existeVoie(null));
+		voies =instance_station2.getVoies();
+		for(Voie v : voies) {
+			assertEquals(true, instance_station2.existeVoie(v));
+		}
+		assertEquals(1, instance_station1.getNbVoies());
+		assertEquals(1, instance_station2.getNbVoies());
 	}
 	
-
+	public void testAddVoie(){
+		assertEquals(true, instance_station1.getVoies().get(0).getNum() == 10);
+	}
+	
+	public void testDeleteVoie(){
+		instance_station1.deleteVoie(10);
+		assertEquals(true, instance_station1.getNbVoies() == 0);
+		assertEquals(true, instance_station2.getNbVoies() == 0);
+	}
+	
+	public void testIsReliee() {
+		assertEquals(true, instance_station1.isReliee(instance_station2));
+		assertEquals(false, instance_station1.isReliee(null));
+		assertEquals(false, instance_station1.isReliee(instance_station3));
+	}
 	
 	/*
 	 * Test de la methode getNbVoies
 	 */
 	@Test
 	public void testGetNbVoies() {		
-		assertEquals(0, instance_station.getNbVoies());
-		
-		instance_station.addVoie(instance_voie1);
-		assertEquals(1, instance_station.getNbVoies());
-		
-		instance_station.addVoie(instance_voie2);
-		assertEquals(2, instance_station.getNbVoies());
-		
-		instance_station.deleteVoie(instance_voie1);
-		assertEquals(1, instance_station.getNbVoies());
+		assertEquals(1, instance_station1.getNbVoies());
+		instance_station1.addVoie(new Station("t", 0, 0, 0, null), 0, 0, null);
+		assertEquals(2, instance_station1.getNbVoies());
 
 	}
 
