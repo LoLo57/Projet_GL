@@ -4,27 +4,26 @@ import java.util.ArrayList;
 
 /**
  * Symbolise le trajet entre deux stations 
- * @author vherrmann
  *
  */
 public class Voie {
 	/*
-	 * Pour le numéro de voie voir pour faire un compteur static
+	 * Pour le numero de voie voir pour faire un compteur static
 	 * pour a chaque nouvelle instance on incremente de 1 ?
 	 */
 	private int num;
-	private int duree; //duree en secondes
+	private int duree; //duree en minute
 	private boolean enCirculation;
 	private ArrayList<Integer> numero_lignes;
 	private Station origine, destination;
 	
 	/**
-	 * Création d'une nouvelle voie
-	 * @param num numéro de la voie
-	 * @param duree durée du trajet
+	 * Creation d'une nouvelle voie
+	 * @param num numero de la voie
+	 * @param duree duree du trajet
 	 * @param ligne ligne de la voie
-	 * @param orig station de départ
-	 * @param dest station d'arrivée
+	 * @param orig station de depart
+	 * @param dest station d'arrivee
 	 */
 	public Voie(int num, int duree, int ligne, Station orig, Station dest){
 		this.num = num;
@@ -37,12 +36,12 @@ public class Voie {
 	}
 	
 	/**
-	 * Création d'une nouvelle voie
-	 * @param num numéro de la voie
-	 * @param duree durée du trajet
-	 * @param lignes liste des numéros de ligne passant par cette voie
-	 * @param orig station de départ
-	 * @param dest station d'arrivée
+	 * Creation d'une nouvelle voie
+	 * @param num numero de la voie
+	 * @param duree duree du trajet
+	 * @param lignes liste des numeros de ligne passant par cette voie
+	 * @param orig station de depart
+	 * @param dest station d'arrivee
 	 */
 	public Voie(int num, int duree, ArrayList<Integer> lignes, Station orig, Station dest){
 		this.num = num;
@@ -55,8 +54,8 @@ public class Voie {
 	}
 	
 	/**
-	 * Retourne la liste des numéros de lignes passant sur cette voie
-	 * @return liste contenant les numéros de ligne
+	 * Retourne la liste des numeros de lignes passant sur cette voie
+	 * @return liste contenant les numeros de ligne
 	 */
 	public ArrayList<Integer> getNumeroLigne(){
 		return this.numero_lignes;
@@ -72,16 +71,16 @@ public class Voie {
 	}
 	
 	/**
-	 * Retourne la durée du trajet sur set voie
-	 * @return la durée du trajet
+	 * Retourne la duree du trajet sur set voie
+	 * @return la duree du trajet
 	 */
 	public int getDuree() {
 		return duree;
 	}
 	
 	/**
-	 * Permet de modifier la durée du trajet
-	 * @param duree la nouvelle durée
+	 * Permet de modifier la duree du trajet
+	 * @param duree la nouvelle duree
 	 */
 	public void setDuree(int duree) {
 		this.duree = duree;
@@ -110,7 +109,7 @@ public class Voie {
 	}
 
 	/**
-	 * Permet de modifier la possibilité de circuler sur la voie
+	 * Permet de modifier la possibilite de circuler sur la voie
 	 * @param enCirculation true si il est possible de circuler sinon false
 	 */
 	public void setEnCirculation(boolean enCirculation) {

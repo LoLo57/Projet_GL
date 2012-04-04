@@ -3,9 +3,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * Symbolise une station de métro
- * Une station à une position, des voies qui la relies à d'autres stations et elle peut être ouverte ou fermée
- * @author vherrmann 
+ * Symbolise une station de metro
+ * Une station a une position, des voies qui la relies a d'autres stations et elle peut etre ouverte ou fermee
  *
  */
 public class Station {
@@ -14,17 +13,17 @@ public class Station {
 	private ArrayList<Integer> lignes;
 	private int x;
 	private int y;
-	private int tempsArret;
+	private int tempsArret; //en minute
 	private ArrayList<Voie> voies;
 	private boolean ouverte;
 	
 	/**
-	 * Création d'une nouvelle station
+	 * Creation d'une nouvelle station
 	 * @param nom nom de la station
 	 * @param x abscisse de la station
 	 * @param y ordonnee de la station
-	 * @param arret durée d'un arret dans cette station
-	 * @param numLigne numéro de la ligne sur laquelle se trouve la station
+	 * @param arret duree d'un arret dans cette station
+	 * @param numLigne numero de la ligne sur laquelle se trouve la station
 	 */
 	public Station(String nom, int x, int y, int arret, int numLigne){
 		this.nom = nom;
@@ -38,12 +37,12 @@ public class Station {
 	}
 	
 	/**
-	 * Création d'une nouvelle station
+	 * Creation d'une nouvelle station
 	 * @param nom nom de la station
 	 * @param x abscisse de la station
 	 * @param y ordonnee de la station
-	 * @param arret durée d'un arret dans cette station
-	 * @param numLignes liste des numéros de lignes sur lesquelles se trouve la station
+	 * @param arret duree d'un arret dans cette station
+	 * @param numLignes liste des numeros de lignes sur lesquelles se trouve la station
 	 */
 	public Station(String nom, int x, int y, int arret, ArrayList<Integer> numLignes){
 		this.nom = nom;
@@ -58,7 +57,7 @@ public class Station {
 	
 
 	/**
-	 * Permet de savoir si la voie donnée en paramètre existe dans la liste des voie de la station
+	 * Permet de savoir si la voie donnee en parametre existe dans la liste des voie de la station
 	 * @param v la voie dont on teste l'existence
 	 * @return true si la voie existe, false sinon
 	 */
@@ -78,10 +77,10 @@ public class Station {
 	}
 	
 	/**
-	 * Crée une nouvelle voie entre la station this et la station donnée en paramètre
+	 * Cree une nouvelle voie entre la station this et la station donnee en parametre
 	 * @param destination la sation vers laquelle la voie va aller
-	 * @param num le numéro de la voie
-	 * @param duree la durée du trajet sur cette voie
+	 * @param num le numero de la voie
+	 * @param duree la duree du trajet sur cette voie
 	 * @param ligne la ligne de la voie
 	 */
 	public void addVoie(Station destination, int num, int duree, int ligne) {
@@ -93,11 +92,11 @@ public class Station {
 	}
 	
 	/**
-	 * Crée une nouvelle voie entre la station this et la station donnée en paramètre
+	 * Cree une nouvelle voie entre la station this et la station donnee en parametre
 	 * @param destination la sation vers laquelle la voie va aller
-	 * @param num le numéro de la voie
-	 * @param duree la durée du trajet sur cette voie
-	 * @param ligne liste des numéros de lignes passant par cette voie
+	 * @param num le numero de la voie
+	 * @param duree la duree du trajet sur cette voie
+	 * @param ligne liste des numeros de lignes passant par cette voie
 	 */
 	public void addVoie(Station destination, int num, int duree, ArrayList<Integer> lignes) {
 		if(destination == null) return;
@@ -108,8 +107,8 @@ public class Station {
 	}
 	
 	/**
-	 * Permet d'ajouter une voie à la liste des voies de la stations
-	 * @param v la voie à ajouter
+	 * Permet d'ajouter une voie a la liste des voies de la stations
+	 * @param v la voie a ajouter
 	 */
 	private void addVoie(Voie v){
 		if(existeVoie(v) == false && v != null){
@@ -119,8 +118,8 @@ public class Station {
 	
 	/**
 	 * Supprimer une voie de la liste des voies de la sation
-	 * Attention ne supprime pas la voie parallèle en sens inverse
-	 * @param v la voie à supprimer
+	 * Attention ne supprime pas la voie parallele en sens inverse
+	 * @param v la voie a supprimer
 	 */
 	public void deleteVoie(Voie v){
 		if(existeVoie(v) == true && v != null){
@@ -130,9 +129,9 @@ public class Station {
 	
 	/**
 	 * Supprimer une voie de la liste des voies de la sation
-	 * Supprime également la voie en sens inverse
-	 * Si il n'existe qu'une des deux fois celle existante est quand même supprimée
-	 * @param numVoie le numéro de la voie à supprimer
+	 * Supprime egalement la voie en sens inverse
+	 * Si il n'existe qu'une des deux fois celle existante est quand meme supprimee
+	 * @param numVoie le numero de la voie a supprimer
 	 */
 	public void deleteVoie(int numVoie){
 		Voie v = getVoie(numVoie);
@@ -162,9 +161,9 @@ public class Station {
 	}
 	
 	/**
-	 * Permet de savoir si la station est reliée à celle données en paramètre
-	 * @param s la station dont on veut savoir si elle est reliée
-	 * @return true si la station est reliée sinon false
+	 * Permet de savoir si la station est reliee a celle donnees en parametre
+	 * @param s la station dont on veut savoir si elle est reliee
+	 * @return true si la station est reliee sinon false
 	 */
 	public boolean isReliee(Station station) {
 		for(Voie voie : voies) {
@@ -220,16 +219,16 @@ public class Station {
 	}
 	
 	/**
-	 * Ordonnée de la station
-	 * @return ordonnée
+	 * Ordonnee de la station
+	 * @return ordonnee
 	 */
 	public int getY() {
 		return y;
 	}
 	
 	/**
-	 * Permet de modifier l'ordonnée de la station
-	 * @param y nouvel ordonnée
+	 * Permet de modifier l'ordonnee de la station
+	 * @param y nouvel ordonnee
 	 */
 	public void setY(int y) {
 		this.y = y;
@@ -244,9 +243,9 @@ public class Station {
 	}
 	
 	/**
-	 * Retourne la voie dont le numéro est donnée en paramètre
+	 * Retourne la voie dont le numero est donnee en parametre
 	 * @param num le numero de la voie a retourner
-	 * @return la voie correspondant au numéro ou null s'il n'y en a pas
+	 * @return la voie correspondant au numero ou null s'il n'y en a pas
 	 */
 	public Voie getVoie(int num) {
 		for(Voie v : voies) if(v.getNum() == num) return v;
@@ -279,5 +278,9 @@ public class Station {
 		this.tempsArret = tempsArret;
 	}
 	
+	
+	public String toString(){
+		return nom + "(" + this.getX() + ", " + this.getY() + ")";
+	}
 	
 }

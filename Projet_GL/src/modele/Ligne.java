@@ -3,8 +3,7 @@ package modele;
 import java.util.ArrayList;
 
 /**
- * Une ligne est un ensemble de station reliées entre elles
- * @author vherrmann
+ * Une ligne est un ensemble de station reliees entre elles
  * 
  */
 public class Ligne {
@@ -13,9 +12,9 @@ public class Ligne {
 	private ArrayList<Station> stations;
 	
 	/**
-	 * Permet de créer une nouvelle ligne avec son numéro et sa liste de station
-	 * Si la liste de station est null elle sera initialisée vide
-	 * @param id le numéro de la ligne
+	 * Permet de creer une nouvelle ligne avec son numero et sa liste de station
+	 * Si la liste de station est null elle sera initialisee vide
+	 * @param id le numero de la ligne
 	 * @param stat la liste des stations de la ligne
 	 */
 	public Ligne(int id, ArrayList<Station> stat){
@@ -24,9 +23,10 @@ public class Ligne {
 		else this.stations = stat;
 	}
 	
+	
 	/**
-	 * Permet de savoir si la sation donnée en paramètre existe sur la ligne
-	 * @param s la station à tester
+	 * Permet de savoir si la sation donnee en paramÔøΩtre existe sur la ligne
+	 * @param s la station ÀÜ tester
 	 * @return true si la station existe sinon false
 	 */
 	public boolean existeStation(Station s){
@@ -43,7 +43,7 @@ public class Ligne {
 	
 	/**
 	 * Ajoute une station sur la ligne
-	 * @param s la station à ajouter
+	 * @param s la station ÀÜ ajouter
 	 */
 	public void addStation(Station s){
 		if(s == null) return;
@@ -54,7 +54,7 @@ public class Ligne {
 	
 	/**
 	 * Reture une station de la ligne
-	 * @param s la station à retirer
+	 * @param s la station ÀÜ retirer
 	 */
 	public void deleteStation(Station s){
 		if(s == null);
@@ -73,5 +73,9 @@ public class Ligne {
 	
 	public ArrayList<Station> getStations(){
 		return this.stations;
+	}
+	
+	public String toString(){
+		return "\n Ligne " + this.getIdLigne() + " : " + this.getStations();
 	}
 }
