@@ -10,7 +10,6 @@ import java.util.Iterator;
 public class Station {
 	
 	private String nom;
-	private ArrayList<Integer> lignes;
 	private int x;
 	private int y;
 	private int tempsArret; //en minute
@@ -23,34 +22,12 @@ public class Station {
 	 * @param x abscisse de la station
 	 * @param y ordonnee de la station
 	 * @param arret duree d'un arret dans cette station
-	 * @param numLigne numero de la ligne sur laquelle se trouve la station
 	 */
-	public Station(String nom, int x, int y, int arret, int numLigne){
+	public Station(String nom, int x, int y, int arret){
 		this.nom = nom;
 		this.x = x;
 		this.y = y;
 		this.voies = new ArrayList<Voie>();
-		lignes = new ArrayList<Integer>();
-		lignes.add(new Integer(numLigne));
-		ouverte = true;
-		setTempsArret(arret);
-	}
-	
-	/**
-	 * Creation d'une nouvelle station
-	 * @param nom nom de la station
-	 * @param x abscisse de la station
-	 * @param y ordonnee de la station
-	 * @param arret duree d'un arret dans cette station
-	 * @param numLignes liste des numeros de lignes sur lesquelles se trouve la station
-	 */
-	public Station(String nom, int x, int y, int arret, ArrayList<Integer> numLignes){
-		this.nom = nom;
-		this.x = x;
-		this.y = y;
-		this.voies = new ArrayList<Voie>();
-		if(numLignes == null) lignes = new ArrayList<Integer>();
-		else lignes = numLignes;
 		ouverte = true;
 		setTempsArret(arret);
 	}
@@ -78,42 +55,27 @@ public class Station {
 	
 	/**
 	 * Cree une nouvelle voie entre la station this et la station donnee en parametre
+	 * La voie en sense inverse est egalement cree
 	 * @param destination la sation vers laquelle la voie va aller
 	 * @param num le numero de la voie
 	 * @param duree la duree du trajet sur cette voie
 	 * @param ligne la ligne de la voie
 	 */
-	public void addVoie(Station destination, int num, int duree, int ligne) {
+	public void addVoie(Station destination, int num, int duree) {
 		if(destination == null) return;
-		Voie v = new Voie(num, duree, ligne, this, destination);
+		Voie v = new Voie(num, duree, this, destination);
 		this.addVoie(v);
-		Voie v2 = new Voie(-num, duree, ligne, destination, this);
-		destination.addVoie(v2);
-	}
-	
-	/**
-	 * Cree une nouvelle voie entre la station this et la station donnee en parametre
-	 * @param destination la sation vers laquelle la voie va aller
-	 * @param num le numero de la voie
-	 * @param duree la duree du trajet sur cette voie
-	 * @param ligne liste des numeros de lignes passant par cette voie
-	 */
-	public void addVoie(Station destination, int num, int duree, ArrayList<Integer> lignes) {
-		if(destination == null) return;
-		Voie v = new Voie(num, duree, lignes, this, destination);
-		this.addVoie(v);
-		Voie v2 = new Voie(-num, duree, lignes, destination, this);
+		Voie v2 = new Voie(-num, duree, destination, this);
 		destination.addVoie(v2);
 	}
 	
 	/**
 	 * Permet d'ajouter une voie a la liste des voies de la stations
+	 * Ne cree pas de voie en sens inverse
 	 * @param v la voie a ajouter
 	 */
 	private void addVoie(Voie v){
-		if(existeVoie(v) == false && v != null){
-			voies.add(v);
-		}
+		if(v != null) if(!existeVoie(v)) voies.add(v);
 	}
 	
 	/**
