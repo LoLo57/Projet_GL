@@ -25,7 +25,7 @@ public class Ligne {
 	
 	
 	/**
-	 * Permet de savoir si la sation donnee en param�tre existe sur la ligne
+	 * Permet de savoir si la sation donnee en parametre existe sur la ligne
 	 * @param s la station ˆ tester
 	 * @return true si la station existe sinon false
 	 */

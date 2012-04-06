@@ -19,10 +19,10 @@ public class LigneTest extends TestCase{
 	
 	public void setUp(){
 		ArrayList<Station> l_stat = new ArrayList<Station>();
-		instance_station1 = new Station("Defense", 148, 23, 60, null);
+		instance_station1 = new Station("Defense", 148, 23, 60);
 		l_stat.add(instance_station1);
 		instance_ligne = new Ligne(1, l_stat);
-		instance_station2 = new Station("Chatelet", 432, 156, 40, null);
+		instance_station2 = new Station("Chatelet", 432, 156, 40);
 	}
 	
 	public void testExiste(){

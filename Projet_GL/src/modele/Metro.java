@@ -10,7 +10,6 @@ public class Metro {
 	public ArrayList<Ligne> metro;
 	
 	public Metro(){
-		
 		this.metro = initialize();	
 	}
 	
@@ -25,35 +24,35 @@ public class Metro {
 		ArrayList<Integer> ListE = new ArrayList<Integer>();
 		ArrayList<Integer> ListJ = new ArrayList<Integer>();
 		
-		A = new Station("A", 50, 50, 10, 1);
+		A = new Station("A", 50, 50, 10);
 		ListB.add(1);
 		ListB.add(3);
-		B = new Station("B", 200, 100, 10, ListB);
-		C = new Station("C", 300, 200, 10, 1);
-		D = new Station("D", 400, 300, 10, 1);
+		B = new Station("B", 200, 100, 10);
+		C = new Station("C", 300, 200, 10);
+		D = new Station("D", 400, 300, 10);
 		ListE.add(2);
 		ListE.add(3);
-		E = new Station("E", 100, 200, 10, ListE);
-		F = new Station("F", 100, 300, 10, 2);
-		G = new Station("G", 400, 100, 10, 3);
-		H = new Station("H", 500, 200, 10, 3);
-		I = new Station("I", 300, 400, 10, 2);
+		E = new Station("E", 100, 200, 10);
+		F = new Station("F", 100, 300, 10);
+		G = new Station("G", 400, 100, 10);
+		H = new Station("H", 500, 200, 10);
+		I = new Station("I", 300, 400, 10);
 		ListJ.add(1);
 		ListJ.add(2);
-		J = new Station("J", 500, 400, 10, 1);
+		J = new Station("J", 500, 400, 10);
 		
 		
 		//instanciation des voies (pour le moment chaque voie dure 20 min)
-		A.addVoie(B, 1, 20, 1);
-		B.addVoie(C, 2, 20, 1);
-		C.addVoie(D, 3, 20, 1);
-		D.addVoie(J, 4, 20, 1);
-		E.addVoie(F, 5, 20, 2);
-		F.addVoie(I, 6, 20, 2);
-		I.addVoie(J, 7, 20, 2);
-		E.addVoie(B, 8, 20, 3);
-		B.addVoie(G, 9, 20, 3);
-		G.addVoie(H, 10, 20, 3);
+		A.addVoie(B, 1, 20);
+		B.addVoie(C, 2, 20);
+		C.addVoie(D, 3, 20);
+		D.addVoie(J, 4, 20);
+		E.addVoie(F, 5, 20);
+		F.addVoie(I, 6, 20);
+		I.addVoie(J, 7, 20);
+		E.addVoie(B, 8, 20);
+		B.addVoie(G, 9, 20);
+		G.addVoie(H, 10, 20);
 		
 		
 		//instanciation des lignes
@@ -84,6 +83,12 @@ public class Metro {
 		return tmp;
 	}
 	
+	/**
+	 * @return liste des lignes du metro
+	 */
+	public ArrayList<Ligne> getMetro() {
+		return metro;
+	}
 	
 	/**
 	* Fonction de recherche de la station la plus proche de l'utilisateur (avec geolocalisation préalable)
@@ -109,6 +114,19 @@ public class Metro {
 	
 	public String toString(){
 		return "Métro : " + metro ;
+	}
+	
+	/**
+	 * Retourne le(s) numero(s) de ligne(s) associe(s) a la station donnee en parametre
+	 * @param la station dont on veut connaitre les lignes auquels elle appartient
+	 * @return liste des numeros de ligne auquel la station appartient
+	 */
+	public ArrayList<Integer> getNumStation(Station s){
+		ArrayList<Integer> res = new ArrayList<Integer>();
+		for(Ligne ligne : metro) {
+			if(ligne.existeStation(s)) res.add(new Integer(ligne.getIdLigne()));
+		}
+		return res;
 	}
 	
 	

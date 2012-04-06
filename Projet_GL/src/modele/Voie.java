@@ -1,7 +1,5 @@
 package modele;
 
-import java.util.ArrayList;
-
 /**
  * Symbolise le trajet entre deux stations 
  *
@@ -14,51 +12,21 @@ public class Voie {
 	private int num;
 	private int duree; //duree en minute
 	private boolean enCirculation;
-	private ArrayList<Integer> numero_lignes;
 	private Station origine, destination;
 	
 	/**
 	 * Creation d'une nouvelle voie
 	 * @param num numero de la voie
 	 * @param duree duree du trajet
-	 * @param ligne ligne de la voie
 	 * @param orig station de depart
 	 * @param dest station d'arrivee
 	 */
-	public Voie(int num, int duree, int ligne, Station orig, Station dest){
+	public Voie(int num, int duree, Station orig, Station dest){
 		this.num = num;
 		this.duree = duree;
-		numero_lignes = new ArrayList<Integer>();
-		numero_lignes.add(new Integer(ligne));
 		this.enCirculation = true;
 		origine = orig;
 		destination = dest;
-	}
-	
-	/**
-	 * Creation d'une nouvelle voie
-	 * @param num numero de la voie
-	 * @param duree duree du trajet
-	 * @param lignes liste des numeros de ligne passant par cette voie
-	 * @param orig station de depart
-	 * @param dest station d'arrivee
-	 */
-	public Voie(int num, int duree, ArrayList<Integer> lignes, Station orig, Station dest){
-		this.num = num;
-		this.duree = duree;
-		if(lignes == null) numero_lignes = new ArrayList<Integer>();
-		else numero_lignes = lignes;
-		this.enCirculation = true;
-		origine = orig;
-		destination = dest;
-	}
-	
-	/**
-	 * Retourne la liste des numeros de lignes passant sur cette voie
-	 * @return liste contenant les numeros de ligne
-	 */
-	public ArrayList<Integer> getNumeroLigne(){
-		return this.numero_lignes;
 	}
 	
 	public int getNum() {

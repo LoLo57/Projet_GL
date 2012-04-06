@@ -22,10 +22,12 @@ public class StationTest extends TestCase{
 	
 	public void setUp(){
 		ligne = new Ligne(1, null);
-		instance_station1 = new Station("test", 1, 1, 30, ligne.getIdLigne());
-		instance_station2 = new Station("test2", 3, 2, 60, ligne.getIdLigne());
-		instance_station3 = new Station("test3", 3, 2, 60, null);
-		instance_station1.addVoie(instance_station2, 10, 40, ligne.getIdLigne());
+		instance_station1 = new Station("test", 1, 1, 30);
+		instance_station2 = new Station("test2", 3, 2, 60);
+		instance_station3 = new Station("test3", 3, 2, 60);
+		instance_station1.addVoie(instance_station2, 10, 40);
+		ligne.addStation(instance_station1);
+		ligne.addStation(instance_station2);
 	}
 
 	
@@ -70,7 +72,7 @@ public class StationTest extends TestCase{
 	@Test
 	public void testGetNbVoies() {		
 		assertEquals(1, instance_station1.getNbVoies());
-		instance_station1.addVoie(new Station("t", 0, 0, 0, null), 0, 0, null);
+		instance_station1.addVoie(new Station("t", 0, 0, 0), 0, 0);
 		assertEquals(2, instance_station1.getNbVoies());
 
 	}
