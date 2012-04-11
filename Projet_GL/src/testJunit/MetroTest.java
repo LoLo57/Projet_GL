@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
+import modele.Ligne;
 import modele.Metro;
 import modele.Station;
 
@@ -41,6 +42,5 @@ public class MetroTest extends TestCase{
 		
 		m.getMetro().get(2).addStation(test);
 		assertEquals(res, m.getNumStation(test));
-	}
-
+	}	
 }

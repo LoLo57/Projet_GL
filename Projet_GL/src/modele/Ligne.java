@@ -41,6 +41,20 @@ public class Ligne {
 		return false;
 	}
 	
+	public Station getStationSuivante(Station s){
+		if(!stations.contains(s)){
+			return null;
+		}
+		for (int i = 0; i < stations.size(); i++) {
+			if(s.getNom().equals(stations.get(i).getNom())){
+				if(i < stations.size()){
+					return stations.get(i+1);
+				}
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * Ajoute une station sur la ligne
 	 * @param s la station ˆ ajouter
