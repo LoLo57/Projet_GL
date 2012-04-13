@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
+import modele.Ligne;
 import modele.Metro;
 import modele.Station;
 

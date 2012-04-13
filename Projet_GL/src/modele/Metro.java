@@ -8,9 +8,11 @@ import java.util.ArrayList;
 public class Metro {
 	
 	public ArrayList<Ligne> metro;
+	private ArrayList<ArrayList<Station>> solution;
 	
 	public Metro(){
 		this.metro = initialize();	
+		this.solution = new ArrayList<ArrayList<Station>>();
 	}
 	
 	/*
@@ -129,6 +131,38 @@ public class Metro {
 		return res;
 	}
 	
+	public ArrayList<Station> getStationsSuivante(Station s){
+		ArrayList<Station> l_stat = new ArrayList<Station>();
+		for(Ligne l : metro){
+			Station st = l.getStationSuivante(s);
+			if(s != null){
+				l_stat.add(st);
+			}
+		}
+		return l_stat;
+	}
+	
+	public void chemin(Ligne l_depart, ArrayList<Station> chemin, Station depart, Station arrivee){
+		if(depart.getNom().equals(arrivee)){
+			//fin arrivée
+			solution.add(chemin);
+		}else{
+			
+			for(Station suiv : this.getStationsSuivante(depart)){
+				if(!(chemin.contains(suiv) && suiv.isOuvert())){
+					chemin.add(suiv);
+					ArrayList<Station> chem2 = (ArrayList<Station>) chemin.clone();
+					chemin(l_depart, chem2, suiv, arrivee);
+					chemin.remove(suiv);
+				}
+			}
+		}
+	}
+	
+	public ArrayList<ArrayList<Station>> getSolution(){
+		return solution;
+	}
+
 	
 	public static void main(String[]args){
 		Metro m = new Metro();
