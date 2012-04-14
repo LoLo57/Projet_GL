@@ -1,6 +1,9 @@
 package modele;
 
+import java.awt.Color;
 import java.util.ArrayList;
+
+import vue.Fenetre;
 
 /*
  * Un metro est un ensemble de Ligne
@@ -16,6 +19,7 @@ public class Metro {
 		stations = new ArrayList<Station>();
 		this.metro = initialize();	
 		stationsVisitees = new ArrayList<Station>();
+		new Fenetre(this);
 	}
 	
 	/*
@@ -73,9 +77,9 @@ public class Metro {
 		
 		//instanciation des lignes
 		Ligne un, deux, trois;
-		un = new Ligne(1, null);
-		deux = new Ligne(2, null);
-		trois = new Ligne(3, null);
+		un = new Ligne(1, null, Color.green);
+		deux = new Ligne(2, null, Color.orange);
+		trois = new Ligne(3, null, Color.blue);
 		
 		un.addStation(A);
 		un.addStation(B);

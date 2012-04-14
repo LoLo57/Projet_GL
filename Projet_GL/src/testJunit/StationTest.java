@@ -21,7 +21,7 @@ public class StationTest extends TestCase{
 	private Ligne ligne;
 	
 	public void setUp(){
-		ligne = new Ligne(1, null);
+		ligne = new Ligne(1, null, null);
 		instance_station1 = new Station("test", 1, 1, 30);
 		instance_station2 = new Station("test2", 3, 2, 60);
 		instance_station3 = new Station("test3", 3, 2, 60);

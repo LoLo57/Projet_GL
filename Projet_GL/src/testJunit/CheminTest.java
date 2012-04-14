@@ -15,8 +15,8 @@ public class CheminTest extends TestCase {
 	public void setUp(){
 		metro = new Metro();
 		chemin = new Chemin(metro);
-		ligne1 = new Ligne(1, null);
-		ligne2 = new Ligne(2, null);
+		ligne1 = new Ligne(1, null, null);
+		ligne2 = new Ligne(2, null, null);
 		metro.ajouterLigne(ligne1);
 		metro.ajouterLigne(ligne2);
 	}

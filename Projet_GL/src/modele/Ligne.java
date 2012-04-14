@@ -1,5 +1,6 @@
 package modele;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 /**
@@ -10,6 +11,7 @@ public class Ligne {
 
 	private int id_ligne;
 	private ArrayList<Station> stations;
+	private Color couleurLigne;
 	
 	/**
 	 * Permet de creer une nouvelle ligne avec son numero et sa liste de station
@@ -17,7 +19,9 @@ public class Ligne {
 	 * @param id le numero de la ligne
 	 * @param stat la liste des stations de la ligne
 	 */
-	public Ligne(int id, ArrayList<Station> stat){
+	public Ligne(int id, ArrayList<Station> stat, Color couleur){
+		if(couleur != null) couleurLigne = couleur;
+		else couleurLigne = Color.black;
 		this.id_ligne = id;
 		if(stat == null) stations = new ArrayList<Station>();
 		else this.stations = stat;
@@ -89,6 +93,14 @@ public class Ligne {
 		return this.stations;
 	}
 	
+	/**
+	 * @return the couleurLigne
+	 */
+	public Color getCouleurLigne() {
+		return couleurLigne;
+	}
+
+
 	public String toString(){
 		return "\n Ligne " + this.getIdLigne() + " : " + this.getStations();
 	}
