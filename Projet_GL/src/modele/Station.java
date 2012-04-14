@@ -205,6 +205,16 @@ public class Station {
 	}
 	
 	/**
+	 * Retourne la voie qui relie la station d'origine a la station donne en parametre
+	 * @param s la station vers laquelle on veut aller
+	 * @return la voie correspondante ou null s'il n'y en a pas
+	 */
+	public Voie getVoie(Station s) {
+		for(Voie v : voies) if(v.getDestination().equals(s)) return v;
+		return null;
+	}
+	
+	/**
 	 * Retourne la voie dont le numero est donnee en parametre
 	 * @param num le numero de la voie a retourner
 	 * @return la voie correspondant au numero ou null s'il n'y en a pas

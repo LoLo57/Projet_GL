@@ -7,12 +7,15 @@ import java.util.ArrayList;
  */
 public class Metro {
 	
-	public ArrayList<Ligne> metro;
-	private ArrayList<ArrayList<Station>> solution;
+	private ArrayList<Ligne> metro;
+	private ArrayList<Station> stations;
+	/** Liste des stations visitees utilise uniquement pour la recherche de chemin */
+	private ArrayList<Station> stationsVisitees;
 	
 	public Metro(){
+		stations = new ArrayList<Station>();
 		this.metro = initialize();	
-		this.solution = new ArrayList<ArrayList<Station>>();
+		stationsVisitees = new ArrayList<Station>();
 	}
 	
 	/*
@@ -42,6 +45,17 @@ public class Metro {
 		ListJ.add(1);
 		ListJ.add(2);
 		J = new Station("J", 500, 400, 10);
+		
+		stations.add(A);
+		stations.add(B);
+		stations.add(C);
+		stations.add(D);
+		stations.add(E);
+		stations.add(F);
+		stations.add(G);
+		stations.add(H);
+		stations.add(I);
+		stations.add(J);
 		
 		
 		//instanciation des voies (pour le moment chaque voie dure 20 min)
@@ -93,6 +107,14 @@ public class Metro {
 	}
 	
 	/**
+	 * Liste l'ensemble des stations du metro
+	 * @return liste des stations du metro
+	 */
+	public ArrayList<Station> getStations() {
+		return stations;
+	}
+	
+	/**
 	* Fonction de recherche de la station la plus proche de l'utilisateur (avec geolocalisation préalable)
 	* @param x
 	* @param y
@@ -131,38 +153,91 @@ public class Metro {
 		return res;
 	}
 	
-	public ArrayList<Station> getStationsSuivante(Station s){
-		ArrayList<Station> l_stat = new ArrayList<Station>();
-		for(Ligne l : metro){
-			Station st = l.getStationSuivante(s);
-			if(s != null){
-				l_stat.add(st);
-			}
+	/**
+	 * Retourne toutes les lignes sur lesquelle la station donne en parametre se trouve
+	 * @param s la station dont on veut connaitre les lignes
+	 * @return liste de ligne contenant le station
+	 */
+	public ArrayList<Ligne> getLignesStation(Station s) {
+		if(s == null || metro == null) return null;
+		ArrayList<Ligne> res = new ArrayList<Ligne>();
+		for(Ligne ligne : metro) {
+			if(ligne.existeStation(s)) res.add(ligne);
 		}
-		return l_stat;
+		return res;
 	}
 	
-	public void chemin(Ligne l_depart, ArrayList<Station> chemin, Station depart, Station arrivee){
-		if(depart.getNom().equals(arrivee)){
-			//fin arrivŽe
-			solution.add(chemin);
-		}else{
-			
-			for(Station suiv : this.getStationsSuivante(depart)){
-				if(!(chemin.contains(suiv) && suiv.isOuvert())){
-					chemin.add(suiv);
-					ArrayList<Station> chem2 = (ArrayList<Station>) chemin.clone();
-					chemin(l_depart, chem2, suiv, arrivee);
-					chemin.remove(suiv);
-				}
-			}
-		}
-	}
-	
-	public ArrayList<ArrayList<Station>> getSolution(){
-		return solution;
+	/**
+	 * Ajout d'une ligne dans le metro
+	 * @param l ligne a ajouter
+	 */
+	public void ajouterLigne(Ligne l) {
+		if(l != null) metro.add(l);
 	}
 
+	/**
+	 * Donne le chemin ayant le temps de trajet le plus court entre 2 stations
+	 * @param depart la station de depart
+	 * @param arrivee la station d'arrivee
+	 * @return le chemin ou null s'il n'y en a pas
+	 */
+	public Chemin getPlusCourtChemin(Station depart, Station arrivee) {
+		ArrayList<Chemin> chemins = getChemins(depart, arrivee, new Chemin(this));
+		Chemin res = null;
+		for(Chemin c : chemins) {
+			if(res == null) res = c;
+			else if(c.getDureeChemin() < res.getDureeChemin()) res = c;
+		}
+		stationsVisitees.clear();
+		return res;
+	}
+	
+	/**
+	 * Donne le chemin ayant le moins de changement entre 2 stations
+	 * @param depart station de depart
+	 * @param arrivee station d'arrivee
+	 * @return le chemin ou null si'il n'y en a pas
+	 */
+	public Chemin getMoinsChangementChemin(Station depart, Station arrivee) {
+		ArrayList<Chemin> chemins = getChemins(depart, arrivee, new Chemin(this));
+		Chemin res = null;
+		for(Chemin c : chemins) {
+			if(res == null) res = c;
+			else if(c.getNbChangement() < res.getNbChangement()) res = c;
+		}
+		stationsVisitees.clear();
+		return res;
+	}
+	
+	/**
+	 * Permet d'obtenir la liste des chemins permettant d'aller d'une station ˆ une autre
+	 * @param depart station de depart du chemin
+	 * @param arrivee station d'arrive du chemin
+	 * @param chemin le chemin, il doit tre initialement vide
+	 * @return liste des chemins permettant d'aller de depart a arrivee
+	 */
+	public ArrayList<Chemin> getChemins(Station depart, Station arrivee, Chemin chemin) {
+		if(depart == null || arrivee == null || chemin == null) return null;
+		if(!depart.isOuvert()) return null;
+		chemin.ajouterStation(depart);
+		
+		// Condition de fin on a trouve la station d'arrivee
+		if(depart.equals(arrivee)) {
+			ArrayList<Chemin> res = new ArrayList<Chemin>();
+			res.add(chemin);
+			return res;
+		} else {	// Sinon on relance la recherche a partir de chaque station liee a celle de depart
+			stationsVisitees.add(depart);
+			ArrayList<Chemin> res = new ArrayList<Chemin>();
+			for(Voie v : depart.getVoies()) {
+				if(!stationsVisitees.contains(v.getDestination()) && v.isEnCirculation()) {
+					ArrayList<Chemin> chemins = getChemins(v.getDestination(), arrivee, chemin.clone());
+					if(chemins != null) res.addAll(chemins);
+				}
+			}
+			return res;
+		}
+	}
 	
 	public static void main(String[]args){
 		Metro m = new Metro();
@@ -172,23 +247,4 @@ public class Metro {
 		System.out.println("Station la plus proche de (" + x +", " + y + ") : " + m.rechercheProcheStation(x, y));
 	}
 	
-
-	
-	
-	//Code de Loic je garde au cas ou
-//	private Ligne ligne_1;
-//	private String[] nom_station_ligne_1 = {"defense grande arche","esplanade de la defense","pont de neuilly","les sablons jardin d'aclimatation","porte maillot palais des congres","argentine","charles de gaulle etoile","george V","franklin d. roosevelt","champs elysees clemenceau grand palais","concorde","tuilerie","palais royal musee du louvre","louvre rivoli","chatelet","hotel de ville","saint paul le marais","bastille","gare de lyon","reuilly diderot","nation","porte de vincennes","saint mande","berault","chateau de vincennes"};
-//	private ArrayList<Station> liste_station_ligne_1;
-//	private int[] abscisse_stations_ligne_1 = {50,150,170,200,220,300,400,470,500,550,600,600,650,690,710,730,780,800,830,900,950,1000,1050,1100,1200};
-//	private int[] ordonnee_stations_ligne_1 = {50,100,150,200,250,320,440,470,510,540,580,620,650,680,730,750,780,810,860,920,970,1000,1090,1150,1200};
-//	
-//	public Metro(){
-//		liste_station_ligne_1 = new ArrayList<Station>();
-//		String sta;
-//		for(int i=0 ; i<nom_station_ligne_1.length ; i++){
-//			sta = nom_station_ligne_1[i];
-//			liste_station_ligne_1.add(new Station(sta, abscisse_stations_ligne_1[i], ordonnee_stations_ligne_1[i]));
-//		}
-//		ligne_1 = new Ligne(1, liste_station_ligne_1);
-//	}
 }
