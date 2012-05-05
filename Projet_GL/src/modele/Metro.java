@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import vue.Fenetre;
+import vue.FenetreMetro;
 
 /*
  * Un metro est un ensemble de Ligne
@@ -19,7 +20,7 @@ public class Metro {
 		stations = new ArrayList<Station>();
 		this.metro = initialize();	
 		stationsVisitees = new ArrayList<Station>();
-		new Fenetre(this);
+		new FenetreMetro(this);
 	}
 	
 	/*
@@ -282,10 +283,10 @@ public class Metro {
 	
 	public static void main(String[]args){
 		Metro m = new Metro();
-		System.out.println(m);
+//		System.out.println(m);
 		int x = 410;
 		int y = 120;
-		System.out.println("Station la plus proche de (" + x +", " + y + ") : " + m.rechercheProcheStation(x, y));
+//		System.out.println("Station la plus proche de (" + x +", " + y + ") : " + m.rechercheProcheStation(x, y));
 	}
 	
 }
