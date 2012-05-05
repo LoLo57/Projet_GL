@@ -21,7 +21,7 @@ public class Fenetre extends JPanel {
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
-		frame.setSize(600, 500);
+		frame.setSize(800, 500);
 		frame.setContentPane(this);
 		frame.setBackground(Color.white);
 		frame.setTitle("Metro");

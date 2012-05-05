@@ -28,27 +28,25 @@ public class Metro {
 	public ArrayList<Ligne> initialize(){
 		
 		//instanciation des stations (pour le moment chaque arret dure 10 min)
-		Station A, B, C, D, E, F, G, H, I, J;
-		ArrayList<Integer> ListB = new ArrayList<Integer>();
-		ArrayList<Integer> ListE = new ArrayList<Integer>();
-		ArrayList<Integer> ListJ = new ArrayList<Integer>();
+		Station A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P;
 		
-		A = new Station("A", 50, 50, 10);
-		ListB.add(1);
-		ListB.add(3);
-		B = new Station("B", 200, 100, 10);
-		C = new Station("C", 300, 200, 10);
-		D = new Station("D", 400, 300, 10);
-		ListE.add(2);
-		ListE.add(3);
-		E = new Station("E", 100, 200, 10);
-		F = new Station("F", 100, 300, 10);
-		G = new Station("G", 400, 100, 10);
-		H = new Station("H", 500, 200, 10);
-		I = new Station("I", 300, 400, 10);
-		ListJ.add(1);
-		ListJ.add(2);
-		J = new Station("J", 500, 400, 10);
+		A = new Station("Monceau", 50, 50, 10);
+		B = new Station("Champs de Mars", 200, 100, 10);
+		C = new Station("Ecole Militaire", 300, 200, 10);
+		D = new Station("Porte de Vincent", 400, 300, 10);
+		E = new Station("Quatre-Septembre", 100, 200, 10);
+		F = new Station("Richard-Lenoir", 100, 300, 10);
+		G = new Station("Rue des Boulets", 400, 100, 10);
+		H = new Station("Maison Blanche", 500, 200, 10);
+		I = new Station("Rue de la Pompe", 300, 400, 10);
+		J = new Station("Invalides", 500, 400, 10);
+		K = new Station("Libert√©", 650, 450, 10);
+		L = new Station("Rome", 50, 400, 10);
+		M = new Station("Duroc", 300, 300, 10);
+		N = new Station("Al√©sia", 600, 50, 10);
+		O = new Station("Alexandre Dumas", 650, 250, 10);
+		P = new Station("Dupleix", 700, 150, 10);
+		
 		
 		stations.add(A);
 		stations.add(B);
@@ -60,6 +58,12 @@ public class Metro {
 		stations.add(H);
 		stations.add(I);
 		stations.add(J);
+		stations.add(K);
+		stations.add(L);
+		stations.add(M);
+		stations.add(N);
+		stations.add(O);
+		stations.add(P);
 		
 		
 		//instanciation des voies (pour le moment chaque voie dure 20 min)
@@ -73,32 +77,65 @@ public class Metro {
 		E.addVoie(B, 8, 20);
 		B.addVoie(G, 9, 20);
 		G.addVoie(H, 10, 20);
+		H.addVoie(O, 11, 20);
+		J.addVoie(K, 12, 20);
+		J.addVoie(O, 13, 20);
+		L.addVoie(F, 14, 20);
+		F.addVoie(M, 15, 20);
+		M.addVoie(D, 16, 20);
+		D.addVoie(H, 17, 20);
+		H.addVoie(N, 18, 20);
+		M.addVoie(C, 19, 20);
+		C.addVoie(G, 20, 20);
+		G.addVoie(N, 21, 20);
+		N.addVoie(P, 22, 20);
+		P.addVoie(O, 23, 20);
+		P.addVoie(K, 24, 20);
 		
 		
 		//instanciation des lignes
-		Ligne un, deux, trois;
+		Ligne un, deux, trois, quatre, cinq;
 		un = new Ligne(1, null, Color.green);
 		deux = new Ligne(2, null, Color.orange);
 		trois = new Ligne(3, null, Color.blue);
+		quatre = new Ligne(4, null, Color.red);
+		cinq = new Ligne(5, null, Color.black);
 		
 		un.addStation(A);
 		un.addStation(B);
 		un.addStation(C);
 		un.addStation(D);
 		un.addStation(J);
+		un.addStation(O);
 		deux.addStation(E);
 		deux.addStation(F);
 		deux.addStation(I);
 		deux.addStation(J);
+		deux.addStation(K);
 		trois.addStation(E);
 		trois.addStation(B);
 		trois.addStation(G);
 		trois.addStation(H);
+		trois.addStation(O);
+		quatre.addStation(L);
+		quatre.addStation(F);
+		quatre.addStation(M);
+		quatre.addStation(D);
+		quatre.addStation(H);
+		quatre.addStation(N);
+		cinq.addStation(M);
+		cinq.addStation(C);
+		cinq.addStation(G);
+		cinq.addStation(N);
+		cinq.addStation(P);
+		cinq.addStation(O);
 		
 		ArrayList<Ligne> tmp = new ArrayList<Ligne>();
 		tmp.add(un);
 		tmp.add(deux);
 		tmp.add(trois);
+		tmp.add(quatre);
+		tmp.add(cinq);
 		
 		return tmp;
 	}
@@ -119,7 +156,7 @@ public class Metro {
 	}
 	
 	/**
-	* Fonction de recherche de la station la plus proche de l'utilisateur (avec geolocalisation prÈalable)
+	* Fonction de recherche de la station la plus proche de l'utilisateur (avec geolocalisation pr√©alable)
 	* @param x
 	* @param y
 	* @return Station la plus proche
@@ -141,7 +178,7 @@ public class Metro {
 	
 	
 	public String toString(){
-		return "MÈtro : " + metro ;
+		return "M√©tro : " + metro ;
 	}
 	
 	/**
@@ -214,10 +251,10 @@ public class Metro {
 	}
 	
 	/**
-	 * Permet d'obtenir la liste des chemins permettant d'aller d'une station à une autre
+	 * Permet d'obtenir la liste des chemins permettant d'aller d'une station ÀÜ une autre
 	 * @param depart station de depart du chemin
 	 * @param arrivee station d'arrive du chemin
-	 * @param chemin le chemin, il doit être initialement vide
+	 * @param chemin le chemin, il doit ÔøΩtre initialement vide
 	 * @return liste des chemins permettant d'aller de depart a arrivee
 	 */
 	public ArrayList<Chemin> getChemins(Station depart, Station arrivee, Chemin chemin) {
