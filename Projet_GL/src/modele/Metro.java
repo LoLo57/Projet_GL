@@ -162,7 +162,7 @@ public class Metro {
 	* @param y
 	* @return Station la plus proche
 	*/
-	public String rechercheProcheStation(int x, int y){
+	public Station rechercheProcheStation(int x, int y){
 		//Plus grande distance possible dans le metro
 		double distance=500;
 		Station stationProche = null;
@@ -174,7 +174,7 @@ public class Metro {
 				}
 			}
 		}
-		return stationProche.getNom();
+		return stationProche;
 	}
 	
 	
