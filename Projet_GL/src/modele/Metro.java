@@ -3,7 +3,6 @@ package modele;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import vue.Fenetre;
 import vue.FenetreMetro;
 
 /*
@@ -91,7 +90,6 @@ public class Metro {
 		G.addVoie(N, 21, 20);
 		N.addVoie(P, 22, 20);
 		P.addVoie(O, 23, 20);
-		P.addVoie(K, 24, 20);
 		
 		
 		//instanciation des lignes
