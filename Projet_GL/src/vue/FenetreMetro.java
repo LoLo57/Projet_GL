@@ -53,8 +53,13 @@ public class FenetreMetro extends JPanel implements ActionListener, MouseListene
 	private JLabel label_info_duree;
 	private JLabel label_info_chemin_moins_changement;
 	
-	//un soucis plus on clique plus il y a le bouton quitter qui s'ajoute
-	//ca doit venir du faite que c'est le constructeur ?
+	/*
+	 * donner la possibilite a l'utilisateur
+	 * de choisir s'il souhaite passer par
+	 * une station speciale
+	 * (faire le chemin entre depart/intermediaire et intermediaire/arrivee
+	 * faire attention de prendre le meme mode de chemin pour les deux)
+	 */
 	public FenetreMetro(Metro metro){
 		if(metro != null){
 			this.metro = metro;
