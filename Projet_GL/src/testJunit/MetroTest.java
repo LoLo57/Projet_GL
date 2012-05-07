@@ -25,8 +25,8 @@ public class MetroTest extends TestCase{
 	*/
 	public void testRechercheProcheStation(){
 
-		assertEquals("A", m.rechercheProcheStation(48,53));
-		assertEquals("B", m.rechercheProcheStation(195, 96));
+		assertEquals("A", m.rechercheProcheStation(48,53, 80));
+		assertEquals("B", m.rechercheProcheStation(195, 96, 80));
 	}
 	
 	/**

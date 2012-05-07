@@ -12,13 +12,10 @@ public class Metro {
 	
 	private ArrayList<Ligne> metro;
 	private ArrayList<Station> stations;
-	/** Liste des stations visitees utilise uniquement pour la recherche de chemin */
-//	private ArrayList<Station> stationsVisitees;
 	
 	public Metro(){
 		stations = new ArrayList<Station>();
 		this.metro = initialize();	
-//		stationsVisitees = new ArrayList<Station>();
 		new FenetreMetro(this);
 	}
 	
@@ -97,7 +94,7 @@ public class Metro {
 		un = new Ligne(1, null, Color.green);
 		deux = new Ligne(2, null, Color.orange);
 		trois = new Ligne(3, null, Color.blue);
-		quatre = new Ligne(4, null, Color.red);
+		quatre = new Ligne(4, null, Color.MAGENTA);
 		cinq = new Ligne(5, null, Color.black);
 		
 		un.addStation(A);
@@ -160,14 +157,14 @@ public class Metro {
 	* @param y
 	* @return Station la plus proche
 	*/
-	public Station rechercheProcheStation(int x, int y){
+	public Station rechercheProcheStation(int x, int y, int decallage){
 		//Plus grande distance possible dans le metro
 		double distance=500;
 		Station stationProche = null;
 			for (Ligne line : metro){
 				for(Station st : line.getStations()){
-				if(distance > Math.sqrt(Math.pow(x - st.getX(), 2.0) + Math.pow(y - st.getY(), 2.0))){
-					distance = Math.sqrt(Math.pow(x - st.getX(), 2.0) + Math.pow(y - st.getY(), 2.0));
+				if(distance > Math.sqrt(Math.pow(x - st.getX(), 2.0) + Math.pow(y - st.getY() - decallage, 2.0))){
+					distance = Math.sqrt(Math.pow(x - st.getX(), 2.0) + Math.pow(y - st.getY() - decallage, 2.0));
 					stationProche = st;
 				}
 			}
@@ -214,6 +211,21 @@ public class Metro {
 	public void ajouterLigne(Ligne l) {
 		if(l != null) metro.add(l);
 	}
+	
+	/**
+	 * Retourne le voie ayant pour origine et destination les stations donnes en parametre
+	 * @param origine station d'origine de la voie
+	 * @param destination station de destination de la voie
+	 * @return la voie correspondante ou null s'il n'y en a pas
+	 */
+	public Voie getVoie(Station origine, Station destination) {
+		for(Station s : stations) {
+			if(s.equals(origine)) {
+				return s.getVoie(destination);
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Donne le chemin ayant le temps de trajet le plus court entre 2 stations
@@ -228,7 +240,24 @@ public class Metro {
 			if(res == null) res = c;
 			else if(c.getDureeChemin() < res.getDureeChemin()) res = c;
 		}
-//		stationsVisitees.clear();
+		return res;
+	}
+	
+	/**
+	 * Donne le chemin ayant le temps de trajet le plus court entre 2 stations en passant par une station specifique
+	 * @param depart la station de depart
+	 * @param arrivee la station d'arrivee
+	 * @param passage station par laquelle on souhaite passer
+	 * @return le chemin ou null s'il n'y en a pas
+	 */
+	public Chemin getPlusCourtChemin(Station depart, Station arrivee, Station passage) {
+		ArrayList<Chemin> chemins = getChemins(depart, arrivee, new Chemin(this), new ArrayList<Station>());
+		Chemin res = null;
+		for(Chemin c : chemins) {
+			if(res == null){
+				if(c.getChemin().contains(passage)) res = c;
+			} else if(c.getDureeChemin() < res.getDureeChemin() && c.getChemin().contains(passage)) res = c;
+		}
 		return res;
 	}
 	
@@ -244,10 +273,26 @@ public class Metro {
 		for(Chemin c : chemins) {
 			if(res == null) res = c;
 			else if(c.getNbChangement() < res.getNbChangement()) res = c;
-			for(Station s : c.getChemin()) System.out.print(s.getNom()+" ==> ");
-			System.out.println();
 		}
-//		stationsVisitees.clear();
+		return res;
+	}
+	
+	/**
+	 * Donne le chemin ayant le moins de changement entre 2 stations en passant par une station specifique
+	 * @param depart station de depart
+	 * @param arrivee station d'arrivee
+	 * @param passage station par laquelle on souhaite passer
+	 * @return le chemin ou null si'il n'y en a pas
+	 */
+	public Chemin getMoinsChangementChemin(Station depart, Station arrivee, Station passage) {
+		ArrayList<Chemin> chemins = getChemins(depart, arrivee, new Chemin(this), new ArrayList<Station>());
+		Chemin res = null;
+		for(Chemin c : chemins) {
+			if(res == null) {
+				if(c.getChemin().contains(passage)) res = c;
+			} else if(c.getNbChangement() < res.getNbChangement() && c.getChemin().contains(passage)) res = c; 
+			else if(c.getNbChangement() == res.getNbChangement() && c.getChemin().contains(passage) && c.getDureeChemin() < res.getNbChangement()) res = c;
+		}
 		return res;
 	}
 	
