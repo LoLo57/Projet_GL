@@ -13,12 +13,12 @@ public class Metro {
 	private ArrayList<Ligne> metro;
 	private ArrayList<Station> stations;
 	/** Liste des stations visitees utilise uniquement pour la recherche de chemin */
-	private ArrayList<Station> stationsVisitees;
+//	private ArrayList<Station> stationsVisitees;
 	
 	public Metro(){
 		stations = new ArrayList<Station>();
 		this.metro = initialize();	
-		stationsVisitees = new ArrayList<Station>();
+//		stationsVisitees = new ArrayList<Station>();
 		new FenetreMetro(this);
 	}
 	
@@ -222,13 +222,13 @@ public class Metro {
 	 * @return le chemin ou null s'il n'y en a pas
 	 */
 	public Chemin getPlusCourtChemin(Station depart, Station arrivee) {
-		ArrayList<Chemin> chemins = getChemins(depart, arrivee, new Chemin(this));
+		ArrayList<Chemin> chemins = getChemins(depart, arrivee, new Chemin(this), new ArrayList<Station>());
 		Chemin res = null;
 		for(Chemin c : chemins) {
 			if(res == null) res = c;
 			else if(c.getDureeChemin() < res.getDureeChemin()) res = c;
 		}
-		stationsVisitees.clear();
+//		stationsVisitees.clear();
 		return res;
 	}
 	
@@ -239,13 +239,15 @@ public class Metro {
 	 * @return le chemin ou null si'il n'y en a pas
 	 */
 	public Chemin getMoinsChangementChemin(Station depart, Station arrivee) {
-		ArrayList<Chemin> chemins = getChemins(depart, arrivee, new Chemin(this));
+		ArrayList<Chemin> chemins = getChemins(depart, arrivee, new Chemin(this), new ArrayList<Station>());
 		Chemin res = null;
 		for(Chemin c : chemins) {
 			if(res == null) res = c;
 			else if(c.getNbChangement() < res.getNbChangement()) res = c;
+			for(Station s : c.getChemin()) System.out.print(s.getNom()+" ==> ");
+			System.out.println();
 		}
-		stationsVisitees.clear();
+//		stationsVisitees.clear();
 		return res;
 	}
 	
@@ -253,10 +255,10 @@ public class Metro {
 	 * Permet d'obtenir la liste des chemins permettant d'aller d'une station ˆ une autre
 	 * @param depart station de depart du chemin
 	 * @param arrivee station d'arrive du chemin
-	 * @param chemin le chemin, il doit �tre initialement vide
+	 * @param chemin le chemin, il doit etre initialement vide
 	 * @return liste des chemins permettant d'aller de depart a arrivee
 	 */
-	public ArrayList<Chemin> getChemins(Station depart, Station arrivee, Chemin chemin) {
+	public ArrayList<Chemin> getChemins(Station depart, Station arrivee, Chemin chemin, ArrayList<Station> stationsVisitees) {
 		if(depart == null || arrivee == null || chemin == null) return null;
 		if(!depart.isOuvert()) return null;
 		chemin.ajouterStation(depart);
@@ -271,7 +273,7 @@ public class Metro {
 			ArrayList<Chemin> res = new ArrayList<Chemin>();
 			for(Voie v : depart.getVoies()) {
 				if(!stationsVisitees.contains(v.getDestination()) && v.isEnCirculation()) {
-					ArrayList<Chemin> chemins = getChemins(v.getDestination(), arrivee, chemin.clone());
+					ArrayList<Chemin> chemins = getChemins(v.getDestination(), arrivee, chemin.clone(), new ArrayList<Station>(stationsVisitees));
 					if(chemins != null) res.addAll(chemins);
 				}
 			}

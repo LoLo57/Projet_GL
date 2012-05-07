@@ -175,6 +175,8 @@ public class FenetreMetro extends JPanel implements ActionListener, MouseListene
 		super.paintComponents(g);
 
 		for(Station s : metro.getStations()) {
+			g.setColor(Color.white);
+			g.drawString(s.getNom(), s.getX(), s.getY() - 15);
 			if(s.equals(depart) || s.equals(arrivee)){
 				g.setColor(Color.WHITE);
 				g.fillOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE, TAILLE_CERCLE);
