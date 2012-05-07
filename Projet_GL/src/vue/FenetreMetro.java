@@ -90,7 +90,7 @@ public class FenetreMetro extends JPanel implements ActionListener, MouseListene
 		passerStation = new JMenuItem("Passer / ne plus passer par cette station");
 		passerStation.addActionListener(this);
 		popup.add(passerStation);
-		
+
 		depart = null;
 		arrivee = null;
 		intermediaire = null;
@@ -359,11 +359,11 @@ public class FenetreMetro extends JPanel implements ActionListener, MouseListene
 			int x = (int)popup.getLocationOnScreen().getX() - fenetre.getX();
 			int y = (int)popup.getLocationOnScreen().getY() - fenetre.getY();
 			Station s = metro.rechercheProcheStation(x, y, DECALLAGE_METRO);
-
+			
 			if(s.isOuvert()) s.fermerStation();
 			else s.ouvrirStation();
 			popup.setVisible(false);
-			fenetre.repaint();
+			this.repaint();
 		}else if(obj == fermerVoie){
 			int x = (int)popup.getLocationOnScreen().getX() - fenetre.getX();
 			int y = (int)popup.getLocationOnScreen().getY() - fenetre.getY();
