@@ -30,22 +30,22 @@ public class Metro {
 		//instanciation des stations (pour le moment chaque arret dure 10 min)
 		Station A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P;
 		
-		A = new Station("Monceau", 50, 50, 10);
-		B = new Station("Champs de Mars", 200, 100, 10);
-		C = new Station("Ecole Militaire", 300, 200, 10);
-		D = new Station("Porte de Vincent", 400, 300, 10);
-		E = new Station("Quatre-Septembre", 100, 200, 10);
-		F = new Station("Richard-Lenoir", 100, 300, 10);
-		G = new Station("Rue des Boulets", 400, 100, 10);
-		H = new Station("Maison Blanche", 500, 200, 10);
-		I = new Station("Rue de la Pompe", 300, 400, 10);
-		J = new Station("Invalides", 500, 400, 10);
-		K = new Station("Liberté", 650, 450, 10);
-		L = new Station("Rome", 50, 400, 10);
-		M = new Station("Duroc", 300, 300, 10);
-		N = new Station("Alésia", 600, 50, 10);
-		O = new Station("Alexandre Dumas", 650, 250, 10);
-		P = new Station("Dupleix", 700, 150, 10);
+		A = new Station("Monceau", 50, 90, 10);
+		B = new Station("Champs de Mars", 200, 140, 10);
+		C = new Station("Ecole Militaire", 300, 240, 10);
+		D = new Station("Porte de Vincent", 400, 340, 10);
+		E = new Station("Quatre-Septembre", 100, 240, 10);
+		F = new Station("Richard-Lenoir", 100, 340, 10);
+		G = new Station("Rue des Boulets", 400, 140, 10);
+		H = new Station("Maison Blanche", 500, 240, 10);
+		I = new Station("Rue de la Pompe", 300, 440, 10);
+		J = new Station("Invalides", 500, 440, 10);
+		K = new Station("Liberté", 650, 490, 10);
+		L = new Station("Rome", 50, 440, 10);
+		M = new Station("Duroc", 300, 340, 10);
+		N = new Station("Alésia", 600, 90, 10);
+		O = new Station("Alexandre Dumas", 650, 290, 10);
+		P = new Station("Dupleix", 700, 190, 10);
 		
 		
 		stations.add(A);

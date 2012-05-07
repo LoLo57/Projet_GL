@@ -35,11 +35,14 @@ public class FenetreMetro extends JPanel implements ActionListener, MouseListene
 	
 	private boolean depart_choisit;
 	private boolean arrivee_choisit;
+	private boolean intermediaire_choisit;
+	private int choix_intermediaire;
 	private boolean chemin_court_choisit;
 	private boolean chemin_moins_changement_choisit;
 	
 	private Station depart;
 	private Station arrivee;
+	private Station intermediaire;
 	
 	private Metro metro;
 	private JFrame fenetre;
@@ -49,27 +52,24 @@ public class FenetreMetro extends JPanel implements ActionListener, MouseListene
 	private JButton chemin_moins_chang;
 	private JLabel label_affichage_depart;
 	private JLabel label_affichage_arrivee;
+	private JLabel label_affichage_intermediaire;
 	
 	private JLabel label_info_duree;
 	private JLabel label_info_chemin_moins_changement;
 	
-	/*
-	 * donner la possibilite a l'utilisateur
-	 * de choisir s'il souhaite passer par
-	 * une station speciale
-	 * (faire le chemin entre depart/intermediaire et intermediaire/arrivee
-	 * faire attention de prendre le meme mode de chemin pour les deux)
-	 */
 	public FenetreMetro(Metro metro){
 		if(metro != null){
 			this.metro = metro;
 		}
 		depart = null;
 		arrivee = null;
+		intermediaire = null;
 		abscisse_user = -1;
 		ordonnee_user = -1;
 		depart_choisit = false;
 		arrivee_choisit = false;
+		intermediaire_choisit = false;
+		choix_intermediaire = -1;
 		chemin_court_choisit = false;
 		chemin_moins_changement_choisit = false;
 		this.setLayout(null);
@@ -115,6 +115,11 @@ public class FenetreMetro extends JPanel implements ActionListener, MouseListene
 		label_affichage_arrivee.setForeground(COULEUR_BOUTON);
 		label_affichage_arrivee.setBounds(220, 20, 400, 30);
 		this.add(label_affichage_arrivee);
+		label_affichage_intermediaire = new JLabel();
+		label_affichage_intermediaire.setFont(police);
+		label_affichage_intermediaire.setForeground(COULEUR_BOUTON);
+		label_affichage_intermediaire.setBounds(220, 20, 400, 30);
+		this.add(label_affichage_intermediaire);
 		
 		//boutons chemins
 		chemin_plus_court = new JButton("Chemin plus court");
@@ -177,7 +182,7 @@ public class FenetreMetro extends JPanel implements ActionListener, MouseListene
 		for(Station s : metro.getStations()) {
 			g.setColor(Color.white);
 			g.drawString(s.getNom(), s.getX(), s.getY() - 15);
-			if(s.equals(depart) || s.equals(arrivee)){
+			if(s.equals(depart) || s.equals(arrivee) || s.equals(intermediaire)){
 				g.setColor(Color.WHITE);
 				g.fillOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE, TAILLE_CERCLE);
 				g.setColor(Color.black);
@@ -210,41 +215,111 @@ public class FenetreMetro extends JPanel implements ActionListener, MouseListene
 
 	public void afficherChemin(Graphics g){
 		if(chemin_court_choisit){
-			Chemin chemin = metro.getPlusCourtChemin(depart, arrivee);
-			label_info_duree.setText(INFO_DUREE+chemin.getDureeChemin());
-			label_info_chemin_moins_changement.setText(INFO_CHANGEMENT+chemin.getNbChangement());
-			label_info_duree.setVisible(true);
-			label_info_chemin_moins_changement.setVisible(true);
-			for(Station s : chemin.getChemin()){
-				if(s.equals(depart) || s.equals(arrivee)){
-					g.setColor(Color.WHITE);
-					g.fillOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE, TAILLE_CERCLE);
-					g.setColor(Color.BLACK);
-					g.drawOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE+1, TAILLE_CERCLE+1);
-				}else{
-					g.setColor(Color.RED);
-					g.fillOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE, TAILLE_CERCLE);
-					g.setColor(Color.WHITE);
-					g.drawOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE+1, TAILLE_CERCLE+1);
+			if(!intermediaire_choisit){
+				Chemin chemin = metro.getPlusCourtChemin(depart, arrivee);
+				label_info_duree.setText(INFO_DUREE+chemin.getDureeChemin());
+				label_info_chemin_moins_changement.setText(INFO_CHANGEMENT+chemin.getNbChangement());
+				label_info_duree.setVisible(true);
+				label_info_chemin_moins_changement.setVisible(true);
+				for(Station s : chemin.getChemin()){
+					if(s.equals(depart) || s.equals(arrivee)){
+						g.setColor(Color.WHITE);
+						g.fillOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE, TAILLE_CERCLE);
+						g.setColor(Color.BLACK);
+						g.drawOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE+1, TAILLE_CERCLE+1);
+					}else{
+						g.setColor(Color.RED);
+						g.fillOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE, TAILLE_CERCLE);
+						g.setColor(Color.WHITE);
+						g.drawOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE+1, TAILLE_CERCLE+1);
+					}
+				}
+			}else{
+				Chemin chemin1 = metro.getPlusCourtChemin(depart, intermediaire);
+				Chemin chemin2 = metro.getPlusCourtChemin(intermediaire, arrivee);
+				label_info_duree.setText(INFO_DUREE+(chemin1.getDureeChemin()+chemin2.getDureeChemin()));
+				label_info_chemin_moins_changement.setText(INFO_CHANGEMENT+(chemin1.getNbChangement()+chemin2.getNbChangement()));
+				label_info_duree.setVisible(true);
+				label_info_chemin_moins_changement.setVisible(true);
+				for(Station s : chemin1.getChemin()){
+					if(s.equals(depart) || s.equals(arrivee) || s.equals(intermediaire)){
+						g.setColor(Color.WHITE);
+						g.fillOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE, TAILLE_CERCLE);
+						g.setColor(Color.BLACK);
+						g.drawOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE+1, TAILLE_CERCLE+1);
+					}else{
+						g.setColor(Color.RED);
+						g.fillOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE, TAILLE_CERCLE);
+						g.setColor(Color.WHITE);
+						g.drawOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE+1, TAILLE_CERCLE+1);
+					}
+				}
+				for(Station s : chemin2.getChemin()){
+					if(s.equals(depart) || s.equals(arrivee) || s.equals(intermediaire)){
+						g.setColor(Color.WHITE);
+						g.fillOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE, TAILLE_CERCLE);
+						g.setColor(Color.BLACK);
+						g.drawOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE+1, TAILLE_CERCLE+1);
+					}else{
+						g.setColor(Color.RED);
+						g.fillOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE, TAILLE_CERCLE);
+						g.setColor(Color.WHITE);
+						g.drawOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE+1, TAILLE_CERCLE+1);
+					}
 				}
 			}
 		}else if(chemin_moins_changement_choisit){
-			Chemin chemin = metro.getMoinsChangementChemin(depart, arrivee);
-			label_info_duree.setText(INFO_DUREE+chemin.getDureeChemin());
-			label_info_chemin_moins_changement.setText(INFO_CHANGEMENT+chemin.getNbChangement());
-			label_info_duree.setVisible(true);
-			label_info_chemin_moins_changement.setVisible(true);
-			for(Station s : chemin.getChemin()){
-				if(s.equals(depart) || s.equals(arrivee)){
-					g.setColor(Color.WHITE);
-					g.fillOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE, TAILLE_CERCLE);
-					g.setColor(Color.BLACK);
-					g.drawOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE+1, TAILLE_CERCLE+1);
-				}else{
-					g.setColor(Color.PINK);
-					g.fillOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE, TAILLE_CERCLE);
-					g.setColor(Color.WHITE);
-					g.drawOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE+1, TAILLE_CERCLE+1);
+			if(!intermediaire_choisit){
+				Chemin chemin = metro.getMoinsChangementChemin(depart, arrivee);
+				label_info_duree.setText(INFO_DUREE+chemin.getDureeChemin());
+				label_info_chemin_moins_changement.setText(INFO_CHANGEMENT+chemin.getNbChangement());
+				label_info_duree.setVisible(true);
+				label_info_chemin_moins_changement.setVisible(true);
+				for(Station s : chemin.getChemin()){
+					if(s.equals(depart) || s.equals(arrivee)){
+						g.setColor(Color.WHITE);
+						g.fillOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE, TAILLE_CERCLE);
+						g.setColor(Color.BLACK);
+						g.drawOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE+1, TAILLE_CERCLE+1);
+					}else{
+						g.setColor(Color.PINK);
+						g.fillOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE, TAILLE_CERCLE);
+						g.setColor(Color.WHITE);
+						g.drawOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE+1, TAILLE_CERCLE+1);
+					}
+				}
+			}else{
+				Chemin chemin1 = metro.getMoinsChangementChemin(depart, intermediaire);
+				Chemin chemin2 = metro.getMoinsChangementChemin(intermediaire, arrivee);
+				label_info_duree.setText(INFO_DUREE+(chemin1.getDureeChemin()+chemin2.getDureeChemin()));
+				label_info_chemin_moins_changement.setText(INFO_CHANGEMENT+(chemin1.getNbChangement()+chemin2.getNbChangement()));
+				label_info_duree.setVisible(true);
+				label_info_chemin_moins_changement.setVisible(true);
+				for(Station s : chemin1.getChemin()){
+					if(s.equals(depart) || s.equals(arrivee) || s.equals(intermediaire)){
+						g.setColor(Color.WHITE);
+						g.fillOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE, TAILLE_CERCLE);
+						g.setColor(Color.BLACK);
+						g.drawOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE+1, TAILLE_CERCLE+1);
+					}else{
+						g.setColor(Color.PINK);
+						g.fillOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE, TAILLE_CERCLE);
+						g.setColor(Color.WHITE);
+						g.drawOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE+1, TAILLE_CERCLE+1);
+					}
+				}
+				for(Station s : chemin2.getChemin()){
+					if(s.equals(depart) || s.equals(arrivee) || s.equals(intermediaire)){
+						g.setColor(Color.WHITE);
+						g.fillOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE, TAILLE_CERCLE);
+						g.setColor(Color.BLACK);
+						g.drawOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE+1, TAILLE_CERCLE+1);
+					}else{
+						g.setColor(Color.PINK);
+						g.fillOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE, TAILLE_CERCLE);
+						g.setColor(Color.WHITE);
+						g.drawOval(s.getX()-TAILLE_CERCLE/2, s.getY()-TAILLE_CERCLE/2, TAILLE_CERCLE+1, TAILLE_CERCLE+1);
+					}
 				}
 			}
 		}
@@ -268,6 +343,10 @@ public class FenetreMetro extends JPanel implements ActionListener, MouseListene
 		}else if(obj == nouveau){
 			depart = null;
 			arrivee = null;
+			intermediaire = null;
+			intermediaire_choisit = false;
+			depart_choisit = false;
+			arrivee_choisit = false;
 			chemin_court_choisit = false;
 			chemin_moins_changement_choisit = false;
 			depart_choisit = false;
@@ -278,6 +357,8 @@ public class FenetreMetro extends JPanel implements ActionListener, MouseListene
 			ordonnee_user = -1;
 			label_affichage_depart.setText("");
 			label_affichage_arrivee.setText("");
+			label_affichage_arrivee.setBounds(220, 20, 400, 30);
+			label_affichage_intermediaire.setText("");
 			label_info_duree.setText("");
 			label_info_chemin_moins_changement.setText("");
 			label_info_duree.setVisible(false);
@@ -316,8 +397,24 @@ public class FenetreMetro extends JPanel implements ActionListener, MouseListene
 				chemin_moins_chang.setVisible(true);
 				chemin_plus_court.setVisible(true);
 				nouveau.setVisible(true);
+				choix_intermediaire = JOptionPane.showConfirmDialog(null, "Voulez-vous passer par une station ?", "Station speciale", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if(choix_intermediaire == JOptionPane.YES_OPTION){
+					JOptionPane.showMessageDialog(fenetre, "Veuillez nous indiquer par ou vous souhaitez passer", "Information", JOptionPane.INFORMATION_MESSAGE);
+				}
 				this.revalidate();
 				this.repaint();
+			}else if(depart_choisit && arrivee_choisit){
+				if(choix_intermediaire == JOptionPane.YES_OPTION){
+					intermediaire_choisit = true;
+					abscisse_user = arg0.getX();
+					ordonnee_user = arg0.getY();
+					intermediaire = metro.rechercheProcheStation(abscisse_user, ordonnee_user);
+					label_affichage_arrivee.setBounds(220, 40, 400, 30);
+					label_affichage_intermediaire.setText("Votre station intermediaire : "+intermediaire.getNom());
+					label_affichage_intermediaire.setToolTipText("Coordonnee : "+abscisse_user+"x"+ordonnee_user);
+					this.revalidate();
+					this.repaint();
+				}
 			}
 		}
 	}
