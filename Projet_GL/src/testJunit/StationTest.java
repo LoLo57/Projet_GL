@@ -11,7 +11,6 @@ import org.junit.Test;
 
 /**
  * Test des stations
- * @author vherrmann
  *
  */
 public class StationTest extends TestCase{

@@ -6,7 +6,6 @@ import java.util.ArrayList;
  * Le classe reprsente un chemin entre 2 stations
  * Elle liste l'ensemble des stations du chemin
  * la dure du trajet ainsi que le nombre de changement
- * @author vherrmann 
  *
  */
 public class Chemin {

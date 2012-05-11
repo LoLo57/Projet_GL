@@ -9,7 +9,6 @@ import junit.framework.TestCase;
 
 /**
  * Test des lignes
- * @author vherrmann
  *
  */
 public class LigneTest extends TestCase{

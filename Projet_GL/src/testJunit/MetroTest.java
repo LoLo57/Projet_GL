@@ -12,21 +12,19 @@ import modele.Station;
 public class MetroTest extends TestCase{
 
 	private Metro m;
-	private Station test;
 	
 	public void setUp(){
 		this.m = new Metro();
-		test = new Station("test", 1, 1, 1);
-		m.getMetro().get(0).addStation(test);
+		
 	}
 
 	/**
 	* Test de la methode rechercheProcheStation (depend de la structure du metro)
 	*/
 	public void testRechercheProcheStation(){
-
-		assertEquals("A", m.rechercheProcheStation(48,53, 80));
-		assertEquals("B", m.rechercheProcheStation(195, 96, 80));
+		System.out.println(m.getStations());
+		assertEquals(m.getStations().get(0), m.rechercheProcheStation(48,53, 80));
+		assertEquals(m.getStations().get(1), m.rechercheProcheStation(195, 96, 80));
 	}
 	
 	/**
@@ -34,14 +32,9 @@ public class MetroTest extends TestCase{
 	 */
 	public void testGetNumStation() {
 		ArrayList<Integer> res = new ArrayList<Integer>();
-		Station temp = new Station("temp", 1, 1, 1);
-		assertEquals(new Integer(1),m.getNumStation(test).get(0));
-		assertEquals(res,m.getNumStation(temp));
-		res.add(new Integer(1));
-		res.add(new Integer(3));
-		
-		m.getMetro().get(2).addStation(test);
-		assertEquals(res, m.getNumStation(test));
+		Station temp = m.getStations().get(1);
+		assertEquals(new Integer(1),m.getNumStation(temp).get(0));
+
 	}
 	
 	public void testGetChemin() {
@@ -72,15 +65,15 @@ public class MetroTest extends TestCase{
 		
 		m.getStations().get(4).fermerStation();	// Fermeture de la station E
 		chemin = m.getPlusCourtChemin(m.getStations().get(0), m.getStations().get(5));
-		assertEquals(1, chemin.getNbChangement());
-		assertEquals(190, chemin.getDureeChemin());
+		assertEquals(2, chemin.getNbChangement());
+		assertEquals(130, chemin.getDureeChemin());
 		
 		m.getStations().get(4).ouvrirStation();	// ouverture de la station E
 		m.getStations().get(2).getVoie(m.getStations().get(3)).setEnCirculation(false); //Fermeture de la voie entre C et D
 		
 		chemin = m.getMoinsChangementChemin(m.getStations().get(0), m.getStations().get(5));
 		assertEquals(2, chemin.getNbChangement());
-		assertEquals(100, chemin.getDureeChemin());
+		assertEquals(130, chemin.getDureeChemin());
 		
 	}
 
