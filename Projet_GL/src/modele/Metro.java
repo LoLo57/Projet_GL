@@ -2,6 +2,7 @@ package modele;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.List;
 
 import vue.FenetreMetro;
 
@@ -12,6 +13,11 @@ public class Metro {
 	
 	private ArrayList<Ligne> metro;
 	private ArrayList<Station> stations;
+	
+	public Metro(ArrayList<Ligne> lignes, ArrayList<Station> stations) {
+		this.stations = stations;
+		this.metro = lignes;
+	}
 	
 	public Metro(){
 		stations = new ArrayList<Station>();
