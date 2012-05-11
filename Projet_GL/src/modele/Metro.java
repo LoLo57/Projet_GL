@@ -279,6 +279,7 @@ public class Metro {
 		for(Chemin c : chemins) {
 			if(res == null) res = c;
 			else if(c.getNbChangement() < res.getNbChangement()) res = c;
+			else if(c.getNbChangement() == res.getNbChangement() && c.getDureeChemin() < res.getDureeChemin()) res = c;
 		}
 		return res;
 	}
@@ -297,7 +298,7 @@ public class Metro {
 			if(res == null) {
 				if(c.getChemin().contains(passage)) res = c;
 			} else if(c.getNbChangement() < res.getNbChangement() && c.getChemin().contains(passage)) res = c; 
-			else if(c.getNbChangement() == res.getNbChangement() && c.getChemin().contains(passage) && c.getDureeChemin() < res.getNbChangement()) res = c;
+			else if(c.getNbChangement() == res.getNbChangement() && c.getChemin().contains(passage) && c.getDureeChemin() < res.getDureeChemin()) res = c;
 		}
 		return res;
 	}
